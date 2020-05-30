@@ -2,8 +2,13 @@
 
 using namespace std;
 
+void myFunction(int x){
+    cout << "Good number : " << x << endl;
+
+}
+
 int main()
 {
-    cout << "Hello world!" << endl;
+    myFunction(1);
     return 0;
 }
