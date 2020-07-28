@@ -1,6 +1,7 @@
 #include <iostream>
 #include<cstdlib>
 #include<stdlib.h>
+#include<ctime>
 using namespace std;
 
 bool isGameOver;
@@ -40,20 +41,20 @@ void Draw(){
 
     for(int i = 0; i < height; i++){
 
-        for(int j = 0; j <= width; j++){
+        for(int j = 0; j <= width; j++)
+        {
             if(j == 0)
                 cout << "#";
 
-                if(i == headY && j == headX){
-                    cout << "O";
-                }
-                else if(i == fruitY && j == fruitX){
-                    cout << "F";
-                }
-                else{
-                    cout << " ";
+            if(i == headY && j == headX)
+                cout << "O";
 
-                }
+            else if(i == fruitY && j == fruitX)
+                cout << "F";
+
+            else
+                cout << " ";
+
 
 
             if(j == width - 1){
@@ -81,12 +82,12 @@ void Input(){
 
 int main()
 {
+
 	while(!isGameOver){
 		GameLogicUpdate();
 		Draw();
 		Input();
 		Setup();
-	}
 
 
 }
