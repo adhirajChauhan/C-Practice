@@ -13,6 +13,8 @@ class TreeNode{
        }
 };
 
+//--------------------------------------------------------------
+
 ///PRINTING OUTPUT RECURSIVELY
 /*void printTree(TreeNode<int>* root){
     if(root==NULL){
@@ -32,6 +34,8 @@ class TreeNode{
     }
 
 }*/
+
+//--------------------------------------------------------------
 
 ///PRINTING OUTPUT LEVEL WISE
 void printTreeLevelWise(TreeNode<int>* root){
@@ -54,6 +58,8 @@ void printTreeLevelWise(TreeNode<int>* root){
         }
     }
 }
+
+//--------------------------------------------------------------
 
 ///TAKING INPUT LEVEL WISE
 TreeNode<int>* takeInputLevelWise(){
@@ -104,6 +110,7 @@ TreeNode<int>* takeInputLevelWise(){
     return root;
 }
 
+//--------------------------------------------------------------
 
 ///COUNTING NODES IN A TREE
 int countNodes(TreeNode<int>* root){
@@ -119,6 +126,8 @@ int countNodes(TreeNode<int>* root){
     return ans;
 
 }
+
+//--------------------------------------------------------------
 
 ///CALCULATING HEIGHT OF THE(HEIGHT IS THE COUNT OF LEVELS)
 
@@ -137,6 +146,27 @@ int height(TreeNode<int>* root){
     return max + 1;
 }
 
+//--------------------------------------------------------------
+
+///Question -> Print the values of all the nodes present at level k/depth d
+
+void printAtLevelK(TreeNode<int>* root , int k){
+    if(root == NULL){ //edge case
+        return;
+    }
+
+    if(k == 0){
+        cout << root -> data<<endl;
+        return;
+    }
+    for(int i = 0; i < root->children.size(); i++){
+        printAtLevelK(root->children[i] , k-1);
+    }
+}
+
+//--------------------------------------------------------------
+
+
 
 int main(){
 
@@ -153,4 +183,6 @@ int main(){
 
     cout << "There are " <<countNodes(root) << " node(s)" << endl;
     cout << "Height of the tree is : " <<height(root) << endl;
+
+    printAtLevelK(root,2);
 }
