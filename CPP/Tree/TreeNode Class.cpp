@@ -11,12 +11,17 @@ class TreeNode{
        TreeNode(T data){
           this->data = data;
        }
+       ~TreeNode(){
+            for(int i = 0; i < children.size(); i++){
+                delete children[i];
+            }
+       }
 };
 
 //--------------------------------------------------------------
 
 ///PRINTING OUTPUT RECURSIVELY
-/*void printTree(TreeNode<int>* root){
+void printTree(TreeNode<int>* root){
     if(root==NULL){
     return ;
    }
@@ -33,7 +38,7 @@ class TreeNode{
 
     }
 
-}*/
+}
 
 //--------------------------------------------------------------
 
@@ -166,8 +171,73 @@ void printAtLevelK(TreeNode<int>* root , int k){
 
 //--------------------------------------------------------------
 
+///Count leaf nodes (Leaf nodes -> don't have children)
 
+int countLeafNode(TreeNode<int>* root){
+    if(root == NULL){
+        return 0;
+    }
+    if(root->children.size() == 0){
+        return 1;
+    }
 
+    int ans = 0;
+    for(int i = 0; i < root->children.size(); i++){
+        ans += countLeafNode(root->children[i]);
+    }
+    return ans;
+}
+
+//--------------------------------------------------------------
+
+///Pre Order traversal (First print the node and then its children (kind of similar to recursive print without fancy part))
+
+void preOrder(TreeNode<int>* root){
+
+    if(root == NULL){ //edge case
+        return;
+    }
+
+    cout << root->data << " ";
+
+    for(int i = 0; i < root->children.size(); i++){
+        preOrder(root->children[i]);
+    }
+
+}
+
+//--------------------------------------------------------------
+
+///Post Order traversal (First print the children and then node (opposite of pre order))
+void postOrder(TreeNode<int>* root){
+
+    if(root == NULL){ //edge case
+        return;
+    }
+
+    for(int i = 0; i < root->children.size(); i++){
+        postOrder(root->children[i]);
+    }
+
+    cout << root->data << " ";
+}
+
+//--------------------------------------------------------------
+
+///Delete Tree (First we will delete the child and then the root
+
+void deleteTree(TreeNode<int>* root){
+    if(root == NULL){ //edge case
+        return;
+    }
+
+    for(int i = 0; i < root->children.size(); i++){
+        deleteTree(root->children[i]);
+    }
+    delete root;
+}
+
+/// 1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0
 int main(){
 
     /*TreeNode<int>* root = new TreeNode<int>(1);
@@ -185,4 +255,11 @@ int main(){
     cout << "Height of the tree is : " <<height(root) << endl;
 
     printAtLevelK(root,2);
+
+    cout << "No of leaf nodes " << countLeafNode(root) << endl;
+
+    cout << "PreOrder Traversal " << preOrder(root)<< endl;
+    cout << "PostOrder Traversal " << postOrder(root)<< endl;
+
+    delete root; ///(We have created a deconstructor, it will call the deconstructor first which will delete the children first and then the root)
 }
