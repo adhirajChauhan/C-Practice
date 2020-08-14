@@ -61,7 +61,7 @@ BTNode<int>* takeInputLevelWise(){
 
     //create a new node
     BTNode<int>* root = new BTNode<int>(rootData);
-    //create queue and node in it
+    //create queue and push node in it
     queue<BTNode<int>*> q;
     q.push(root);
 
@@ -111,11 +111,69 @@ void printTree(BTNode<int>* root){
         cout <<"L" << root->left->data;
     }
     if(root->right != NULL){
-        cout <<"R" << root->left->data;
+        cout <<"R" << root->right->data;
     }
     cout << endl;
     printTree(root->left);
     printTree(root->right);
+}
+
+
+///-----------------------------------------------------------
+
+///Find Node in a tree
+
+bool findNode(BTNode<int>* root, int key){
+    if(root == NULL){
+        return false;
+    }
+    if(root->data == key){
+        return true;
+    }
+
+    return(findNode(root->left,key) || findNode(root->right,key));
+}
+
+///-----------------------------------------------------------
+
+///Find min value from the tree
+
+int findMin(BTNode<int>* root){
+    if(root == NULL) return INT_MAX;
+
+    //by recursion we will find the min value in left and right tree
+
+    int leftMin = findMin(root->left);
+    int rightMin = findMin(root->right);
+
+    return min(root->data, min(leftMin,rightMin));
+}
+
+///-----------------------------------------------------------
+
+///Find max value from the tree
+
+int findMax(BTNode<int>* root){
+    if(root == NULL) return INT_MIN;
+
+    //by recursion we will find the min value in left and right tree
+
+    int leftMax = findMax(root->left);
+    int rightMax = findMax(root->right);
+
+    return max(root->data, max(leftMax,rightMax));
+}
+
+///-----------------------------------------------------------
+
+///Find number of leaf nodes in a tree
+
+int countLeafNodes(BTNode<int>* root){
+    if(root == NULL) return 0;
+
+    if(root->left == NULL && root->right == NULL) return 1;
+
+    return countLeafNodes(root->left) + countLeafNodes(root->right);
 }
 
 
@@ -127,7 +185,20 @@ int main (){
 
     root -> left = n1;
     root -> right = n2;*/
-
     BTNode<int>* root = takeInputLevelWise();
     printTree(root);
+
+    cout << "Searching for 2" << endl;
+    if(findNode(root,2)){
+        cout << "Node present" << endl;
+    }
+    else{
+        cout << "Node not present" << endl;
+    }
+
+    cout << "Min number in tree is " << findMin(root)<<endl;
+
+    cout << "Max number in tree is " << findMax(root)<<endl;
+
+    cout << "There are " << countLeafNodes(root) << " leaf nodes" << endl;
 }
